@@ -49,7 +49,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <opencv2/core/core.hpp>
-#include <opencv2/features2d/features2d.hpp>
+#include <okvis/OpenCVCompat.hpp>
 #pragma GCC diagnostic pop
 #include <okvis/assert_macros.hpp>
 #include <okvis/Time.hpp>

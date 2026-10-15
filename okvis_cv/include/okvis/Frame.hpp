@@ -50,11 +50,8 @@
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <opencv2/core/core.hpp> // Code that causes warning goes here
 #pragma GCC diagnostic pop
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Woverloaded-virtual"
-#include <opencv2/features2d/features2d.hpp> // Code that causes warning goes here
-#pragma GCC diagnostic pop
 
+#include <okvis/OpenCVCompat.hpp>
 #include <okvis/Time.hpp>
 #include <okvis/assert_macros.hpp>
 #include "okvis/cameras/CameraBase.hpp"

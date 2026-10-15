@@ -37,6 +37,8 @@
  * @author Andreas Forster
  */
 
+#include <cassert>
+
 #include <opengv/absolute_pose/FrameNoncentralAbsoluteAdapter.hpp>
 #include <okvis/ceres/HomogeneousPointParameterBlock.hpp>
 

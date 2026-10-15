@@ -37,6 +37,7 @@
  * @author Andreas Forster
  */
 
+#include <cassert>
 #include <map>
 
 #include <pthread.h>

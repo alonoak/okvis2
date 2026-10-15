@@ -3,9 +3,11 @@ project(opengv VERSION 1.0 LANGUAGES CXX)
 
 # okvis2: remove hardcoded options to inherit them from okvis2
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/modules/")
-find_package(Eigen REQUIRED)
-set(ADDITIONAL_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS} ${EIGEN_INCLUDE_DIR}/unsupported)
+# okvis2: use Eigen's CMake config, modules/FindEigen.cmake cannot read the
+# version of Eigen 5
+find_package(Eigen3 REQUIRED NO_MODULE)
+get_target_property(EIGEN_INCLUDE_DIR Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)
+set(ADDITIONAL_INCLUDE_DIRS ${EIGEN_INCLUDE_DIR} ${EIGEN_INCLUDE_DIR}/unsupported)
 
 set( OPENGV_SOURCE_FILES
   src/absolute_pose/modules/main.cpp
@@ -131,7 +133,7 @@ add_library( opengv ${OPENGV_SOURCE_FILES} ${OPENGV_HEADER_FILES} )
 set_target_properties( opengv PROPERTIES
                     SOVERSION ${PROJECT_VERSION}
                     VERSION ${PROJECT_VERSION}
-                    CXX_STANDARD 11
+                    CXX_STANDARD 14 # okvis2: Eigen 5 requires C++14
                     CXX_STANDARD_REQUIRED ON)
                     # okvis2: remove DEBUG_POSTFIX to easily build in Debug
 

@@ -39,6 +39,8 @@
 #ifndef INCLUDE_OKVIS_KINEMATICS_OPERATORS_HPP_
 #define INCLUDE_OKVIS_KINEMATICS_OPERATORS_HPP_
 
+#include <cassert>
+
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 

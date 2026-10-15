@@ -11,6 +11,11 @@ function(copy_if_exists SOURCE DESTINATION)
 endfunction()
 
 if(NOT USE_SYSTEM_BRISK)
+  # Use modified CMakeLists.txt files and OpenCV header for brisk to build with
+  # both OpenCV 4 and OpenCV 5, which renamed the features2d module to features.
+  copy_if_exists(${CMAKE_CURRENT_SOURCE_DIR}/patches/brisk/CMakeLists.txt ${CMAKE_CURRENT_SOURCE_DIR}/brisk/CMakeLists.txt)
+  copy_if_exists(${CMAKE_CURRENT_SOURCE_DIR}/patches/brisk/agast/CMakeLists.txt ${CMAKE_CURRENT_SOURCE_DIR}/brisk/agast/CMakeLists.txt)
+  copy_if_exists(${CMAKE_CURRENT_SOURCE_DIR}/patches/brisk/agast/include/agast/wrap-opencv.h ${CMAKE_CURRENT_SOURCE_DIR}/brisk/agast/include/agast/wrap-opencv.h)
   option(BRISK_BUILD_DEMO OFF)
   add_subdirectory(brisk)
 endif()
@@ -25,6 +30,8 @@ if(NOT USE_SYSTEM_DBOW2)
 endif()
 
 if(NOT USE_SYSTEM_CERES)
+  # Use a modified CMakeLists.txt for ceres to build with Eigen 5 and CUDA 13.
+  copy_if_exists(${CMAKE_CURRENT_SOURCE_DIR}/patches/ceres-solver/CMakeLists.txt ${CMAKE_CURRENT_SOURCE_DIR}/ceres-solver/CMakeLists.txt)
   if(OPENMP_FOUND)
     set(CERES_THREADING_MODEL OPENMP)
   else()
@@ -37,8 +44,9 @@ if(NOT USE_SYSTEM_CERES)
 endif()
 
 # Use a modified CMakeLists.txt for OpenGV to build with the same flags as
-# okvis2.
+# okvis2, and a modified types.hpp to build with Eigen 5.
 copy_if_exists(${CMAKE_CURRENT_SOURCE_DIR}/patches/opengv/CMakeLists.txt ${CMAKE_CURRENT_SOURCE_DIR}/opengv/CMakeLists.txt)
+copy_if_exists(${CMAKE_CURRENT_SOURCE_DIR}/patches/opengv/include/opengv/types.hpp ${CMAKE_CURRENT_SOURCE_DIR}/opengv/include/opengv/types.hpp)
 add_subdirectory(opengv)
 set(OPENGV_LIBRARIES opengv PARENT_SCOPE)
 

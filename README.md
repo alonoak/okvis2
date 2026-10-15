@@ -62,7 +62,7 @@ You will need to install the following dependencies,
 
         sudo apt install libboost-dev libboost-filesystem-dev
 
-* OpenCV 2.4-4: follow the instructions on http://opencv.org/ or install
+* OpenCV 4 or 5: follow the instructions on http://opencv.org/ or install
   via
 
         sudo apt install libopencv-dev
@@ -125,7 +125,7 @@ You will need to install the following dependencies,
 
         brew install boost
 
-* OpenCV 2.4-4,
+* OpenCV 4 or 5,
 
         brew install opencv
 

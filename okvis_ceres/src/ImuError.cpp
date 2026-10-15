@@ -37,6 +37,8 @@
  * @author Andreas Forster
  */
 
+#include <cassert>
+
 #include <glog/logging.h>
 
 #include <okvis/kinematics/operators.hpp>

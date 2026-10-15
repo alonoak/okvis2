@@ -36,6 +36,25 @@ endif()
 set(BLA_VENDOR Generic)
 find_package(LAPACK REQUIRED)
 
+# Both OpenCV 4 and OpenCV 5 are supported.
+# OpenCV builds with CUDA call find_package(CUDA) from their config, which needs
+# the FindCUDA module removed by policy CMP0146. Subdirectories then inherit
+# CUDA_FOUND and skip that lookup.
+cmake_policy(PUSH)
+if(POLICY CMP0146)
+  cmake_policy(SET CMP0146 OLD)
+endif()
+find_package(OpenCV REQUIRED core)
+cmake_policy(POP)
+message(STATUS "Found OpenCV ${OpenCV_VERSION}")
+# OpenCV 5 renamed the features2d module to features, so modules needing it
+# request ${OKVIS_OPENCV_FEATURES}.
+if(OpenCV_VERSION VERSION_LESS 5)
+  set(OKVIS_OPENCV_FEATURES features2d)
+else()
+  set(OKVIS_OPENCV_FEATURES features)
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Make sure we use Release and warn otherwise

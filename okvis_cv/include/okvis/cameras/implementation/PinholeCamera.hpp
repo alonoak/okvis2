@@ -39,6 +39,8 @@
 
 #pragma once
 
+#include <cassert>
+
 #include <Eigen/Geometry>
 
 #include <okvis/cameras/PinholeCamera.hpp>

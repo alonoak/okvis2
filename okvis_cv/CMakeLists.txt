@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.8...3.30)
 
 find_package(Eigen3 REQUIRED)
-find_package(OpenCV REQUIRED core features2d imgproc)
+find_package(OpenCV REQUIRED core ${OKVIS_OPENCV_FEATURES} imgproc)
 if(USE_SYSTEM_BRISK)
   find_package(brisk REQUIRED)
 endif()
 if(USE_NN)
   find_package(Torch REQUIRED)
+  find_package(Glog REQUIRED)
 else()
   message(WARNING "Network keypoint classification deactivated")
 endif()
@@ -15,6 +16,7 @@ set(LIB_NAME okvis_cv)
 add_library(${LIB_NAME}
   include/okvis/Frame.hpp
   include/okvis/MultiFrame.hpp
+  include/okvis/OpenCVCompat.hpp
   include/okvis/implementation/Frame.hpp
   include/okvis/implementation/MultiFrame.hpp
   include/okvis/cameras/CameraBase.hpp
@@ -64,6 +66,8 @@ target_compile_options(${LIB_NAME}
 if(USE_NN)
   target_compile_options(${LIB_NAME} PUBLIC ${TORCH_CXX_FLAGS})
   target_compile_definitions(${LIB_NAME} PUBLIC OKVIS_USE_NN C10_USE_GLOG)
+  # C10_USE_GLOG makes the Torch headers include glog, so its definitions are needed.
+  target_link_libraries(${LIB_NAME} PUBLIC ${GLOG_LIBRARIES})
   if(USE_GPU)
     target_compile_definitions(${LIB_NAME} PUBLIC OKVIS_USE_GPU)
   endif()

@@ -38,6 +38,8 @@
 
 #pragma once
 
+#include <cassert>
+
 #include <okvis/kinematics/Transformation.hpp>
 #include "okvis/kinematics/operators.hpp"
 
